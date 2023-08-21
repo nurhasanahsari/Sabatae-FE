@@ -9,7 +9,6 @@ import LAYOUT_CONST from '@/constant';
 import useConfig from '@/hooks/useConfig';
 import LogoSection from '../LogoSection';
 import ProfileSection from './ProfileSection';
-import { useSelector } from '@/store';
 
 // assets
 import { IconMenu2 } from '@tabler/icons-react';
@@ -18,7 +17,6 @@ import { IconMenu2 } from '@tabler/icons-react';
 
 const Header = ({ handleDrawerToggle }) => {
   const theme = useTheme();
-  const { selectedSchool } = useSelector((state) => state.main);
 
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
   const { layout } = useConfig();

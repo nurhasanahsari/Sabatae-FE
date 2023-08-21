@@ -31,7 +31,7 @@ import AlertDialog from '@/ui-component/extended/AlertDialog';
 import greeting from '@/utils/greeting';
 
 // assets
-import { IconLogout, IconSettings } from '@tabler/icons-react';
+import { IconLogout } from '@tabler/icons-react';
 import useConfig from '@/hooks/useConfig';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 

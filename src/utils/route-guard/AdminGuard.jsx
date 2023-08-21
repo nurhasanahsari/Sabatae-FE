@@ -18,7 +18,7 @@ const AdminGuard = ({ children }) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      if (!['01', '02'].includes(user?.role)) {
+      if (!['02'].includes(user?.role)) {
         navigate('/forbidden', { replace: true });
       }
     }

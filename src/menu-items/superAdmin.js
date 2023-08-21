@@ -26,10 +26,10 @@ const icons = {
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
 
-const admin = {
-  id: 'admin',
-  title: 'admin',
-  caption: 'admin',
+const superAdmin = {
+  id: 'superAdmin',
+  title: 'superAdmin',
+  caption: 'superAdmin',
   icon: null,
   type: 'group',
   children: [
@@ -37,8 +37,18 @@ const admin = {
       id: 'dashboard',
       title: 'Dashboard',
       type: 'item',
-      url: '/admin/dashboard',
+      url: '/super-admin/dashboard',
       icon: icons.IconDashboard,
+      breadcrumbs: false,
+      external: false,
+      target: false,
+    },
+    {
+      id: 'user-management',
+      title: 'Manajemen Pengguna',
+      type: 'item',
+      url: '/super-admin/user-management',
+      icon: icons.IconUserCog,
       breadcrumbs: false,
       external: false,
       target: false,
@@ -47,7 +57,7 @@ const admin = {
       id: 'inventory',
       title: 'Persediaan',
       type: 'item',
-      url: '/admin/inventory',
+      url: '/super-admin/inventory',
       icon: icons.IconBuildingWarehouse,
       breadcrumbs: false,
       external: false,
@@ -57,7 +67,7 @@ const admin = {
       id: 'purchase',
       title: 'Pembelian',
       type: 'item',
-      url: '/admin/purchase',
+      url: '/super-admin/purchase',
       icon: icons.IconShoppingCartPlus,
       breadcrumbs: false,
       external: false,
@@ -67,7 +77,7 @@ const admin = {
       id: 'sale',
       title: 'Penjualan',
       type: 'item',
-      url: '/admin/sale',
+      url: '/super-admin/sale',
       icon: icons.IconShoppingCartX,
       breadcrumbs: false,
       external: false,
@@ -77,7 +87,7 @@ const admin = {
       id: 'category',
       title: 'Kategori',
       type: 'item',
-      url: '/admin/category',
+      url: '/super-admin/category',
       icon: icons.IconColorFilter,
       breadcrumbs: false,
       external: false,
@@ -87,7 +97,7 @@ const admin = {
       id: 'retur',
       title: 'Retur Penjualan',
       type: 'item',
-      url: '/admin/retur',
+      url: '/super-admin/retur',
       icon: icons.IconReceiptRefund,
       breadcrumbs: false,
       external: false,
@@ -97,7 +107,7 @@ const admin = {
       id: 'report',
       title: 'Data Laporan',
       type: 'item',
-      url: '/admin/report',
+      url: '/super-admin/report',
       icon: icons.IconClipboardData,
       breadcrumbs: false,
       external: false,
@@ -106,4 +116,4 @@ const admin = {
   ],
 };
 
-export default admin;
+export default superAdmin;

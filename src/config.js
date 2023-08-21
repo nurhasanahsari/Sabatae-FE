@@ -3,7 +3,8 @@ import LAYOUT_CONST from '@/constant';
 // basename: only at build time to set, and Don't add '/' at end off BASENAME for breadcrumbs, also Don't put only '/' use blank('') instead,
 export const BASE_PATH = '';
 
-export const DASHBOARD_PATH = '/admin/dashboard';
+export const DASHBOARD_ADMIN_PATH = '/admin/dashboard';
+export const DASHBOARD_SUPER_ADMIN_PATH = '/super-admin/dashboard';
 
 export const HORIZONTAL_MAX_ITEM = 6;
 

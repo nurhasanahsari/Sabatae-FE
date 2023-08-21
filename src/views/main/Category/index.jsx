@@ -37,7 +37,7 @@ import AddCategory from './forms/AddCategory';
 import EditCategory from './forms/EditCategory';
 
 // assets
-import { IconShoppingCart, IconSearch, IconTrash, IconDots, IconUserEdit } from '@tabler/icons-react';
+import { IconEdit, IconSearch, IconTrash, IconDots, IconPlus } from '@tabler/icons-react';
 
 // Table Header
 const headCells = [
@@ -130,7 +130,7 @@ const Category = () => {
     <>
       <Grid container gap={2}>
         <Grid item xs={12}>
-          <Typography variant="h2">Pembelian</Typography>
+          <Typography variant="h2">Kategori</Typography>
         </Grid>
         <Grid item xs={12}>
           <MainCard>
@@ -157,7 +157,7 @@ const Category = () => {
                 <Button
                   size="medium"
                   variant="contained"
-                  endIcon={<IconShoppingCart />}
+                  endIcon={<IconPlus />}
                   sx={{ width: 'fit-content', px: 3 }}
                   onClick={() => setOpenAdd(true)}
                 >
@@ -219,7 +219,7 @@ const Category = () => {
                                   }}
                                   disableRipple
                                 >
-                                  <IconUserEdit color={theme.palette.info.main} stroke={1.5} style={{ marginRight: 5 }} />
+                                  <IconEdit color={theme.palette.info.main} stroke={1.5} style={{ marginRight: 5 }} />
                                   Ubah Kategori
                                 </MenuItem>
                                 <MenuItem

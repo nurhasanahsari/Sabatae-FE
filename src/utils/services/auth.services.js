@@ -11,9 +11,9 @@ export const login = async (payload) => {
   }
 };
 
-export const getUserDetail = async () => {
+export const getUserDetail = async (email) => {
   try {
-    const response = await axios.get('/user/all');
+    const response = await axios.get(`/user/all?email=${email}`);
     return response;
   } catch (errors) {
     return errors.response;

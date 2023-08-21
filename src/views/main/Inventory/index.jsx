@@ -5,7 +5,6 @@ import { useTheme } from '@mui/system';
 import {
   Grid,
   Stack,
-  Card,
   Button,
   Typography,
   Dialog,
@@ -27,7 +26,7 @@ import {
 
 import { useDispatch, useSelector } from '@/store';
 import { getInventories, deleteInventory } from '@/store/slices/inventory';
-import { getCategories } from '@/store/slices/category';
+import { getFilterCategories } from '@/store/slices/category';
 
 // project import
 import MainCard from '@/ui-component/cards/MainCard';
@@ -39,7 +38,7 @@ import AddInventory from './forms/AddInventory';
 import EditInventory from './forms/EditInventory';
 
 // assets
-import { IconSearch, IconTrash, IconDots, IconUserEdit, IconClipboardPlus } from '@tabler/icons-react';
+import { IconSearch, IconTrash, IconDots, IconClipboardPlus, IconEdit } from '@tabler/icons-react';
 
 // Table Header
 const headCells = [
@@ -86,16 +85,16 @@ const Inventory = () => {
   // category
   const [category, setCategory] = useState([]);
   const [selectCategory, setSelectCategory] = useState('semua');
-  const { categories, loadingCategory } = useSelector((state) => state.category);
+  const { categoriesFilter, loadingCategoryFilter } = useSelector((state) => state.category);
 
   useEffect(() => {
     setSelectCategory('semua');
-    dispatch(getCategories());
+    dispatch(getFilterCategories());
   }, [dispatch]);
 
   useEffect(() => {
-    setCategory(categories);
-  }, [categories]);
+    setCategory(categoriesFilter);
+  }, [categoriesFilter]);
 
   // table data
   const [order, setOrder] = useState('desc');
@@ -154,11 +153,7 @@ const Inventory = () => {
 
   useEffect(() => {
     if (!errorDelete && !loadingDelete) {
-      if (selectCategory === 'semua') {
-        dispatch(getInventories());
-      } else {
-        dispatch(getInventories(`?id_category=${selectCategory}`));
-      }
+      dispatch(getInventories());
       setOpenDeleteDialog(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -173,7 +168,7 @@ const Inventory = () => {
 
         <Grid item xs={12}>
           <MainCard sx={{ boxShadow: '0px 0px 14px 0px rgba(0,0,0,0.05)', p: 2 }}>
-            {loadingCategory ? (
+            {loadingCategoryFilter ? (
               <Grid item xs={12} my={2} display="flex" alignContent="center" justifyContent="center">
                 <CircularProgress />
               </Grid>
@@ -245,7 +240,7 @@ const Inventory = () => {
                           return (
                             <TableRow hover key={index}>
                               <TableCell align="center" component="th" scope="row">
-                                <>{page * 10 + index + 1}.</>
+                                <>{page * rowsPerPage + index + 1}.</>
                               </TableCell>
                               <TableCell>
                                 <Stack alignItems="center" gap={1}>
@@ -287,7 +282,7 @@ const Inventory = () => {
                                     }}
                                     disableRipple
                                   >
-                                    <IconUserEdit color={theme.palette.info.main} stroke={1.5} style={{ marginRight: 5 }} />
+                                    <IconEdit color={theme.palette.info.main} stroke={1.5} style={{ marginRight: 5 }} />
                                     Ubah Persediaan
                                   </MenuItem>
                                   <MenuItem

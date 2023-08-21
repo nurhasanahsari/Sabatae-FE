@@ -14,11 +14,13 @@ const initialState = {
   errorDelete: null,
 
   loadingInventory: false,
+  loadingInventoryFilter: false,
   loadingLog: false,
   loadingCreate: false,
   loadingUpdate: false,
   loadingDelete: false,
   inventories: [],
+  inventoriesFilter: [],
 };
 
 const slice = createSlice({
@@ -28,6 +30,9 @@ const slice = createSlice({
     // LOADING
     loadingInventory(state, action) {
       state.loadingInventory = action.payload;
+    },
+    loadingInventoryFilter(state, action) {
+      state.loadingInventoryFilter = action.payload;
     },
     loadingLog(state, action) {
       state.loadingLog = action.payload;
@@ -60,6 +65,9 @@ const slice = createSlice({
     getInventoriesSuccess(state, action) {
       state.inventories = action.payload;
     },
+    getInventoriesFilterSuccess(state, action) {
+      state.inventoriesFilter = action.payload;
+    },
   },
 });
 
@@ -78,6 +86,20 @@ export function getInventories(param) {
     } catch (error) {
       dispatch(slice.actions.hasError(error));
       dispatch(slice.actions.loadingInventory(false));
+    }
+  };
+}
+
+export function getFilterInventories(param) {
+  return async () => {
+    try {
+      dispatch(slice.actions.loadingInventoryFilter(true));
+      const response = await axios.get(`/inventory/filter${param || ''}`);
+      dispatch(slice.actions.getInventoriesFilterSuccess(response.data.data));
+      dispatch(slice.actions.loadingInventoryFilter(false));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+      dispatch(slice.actions.loadingInventoryFilter(false));
     }
   };
 }

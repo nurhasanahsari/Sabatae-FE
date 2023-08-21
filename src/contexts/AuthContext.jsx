@@ -51,8 +51,8 @@ export const AuthProvider = ({ children }) => {
     checkingLogin();
   }, [dispatch]);
 
-  const getUserInfo = async () => {
-    const res = await getUserDetail();
+  const getUserInfo = async (email) => {
+    const res = await getUserDetail(email);
     if (res.status === 200) {
       const data = encodeData(res.data.data[0]);
       window.localStorage.setItem('@_ui_us', data);
@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
       return res;
     } else {
       setToken(res.data.data);
-      getUserInfo();
+      getUserInfo(email);
     }
   };
 

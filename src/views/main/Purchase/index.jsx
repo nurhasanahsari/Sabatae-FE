@@ -19,11 +19,14 @@ import {
   TableCell,
   IconButton,
   CircularProgress,
+  Select,
+  MenuItem,
 } from '@mui/material';
 
 // api
 import { useDispatch, useSelector } from '@/store';
 import { getTransactions } from '@/store/slices/transaction';
+import { getFilterInventories } from '@/store/slices/inventory';
 
 // project import
 import MainCard from '@/ui-component/cards/MainCard';
@@ -32,7 +35,7 @@ import { getComparator, stableSort, handleSearch, handleRequestSort } from '@/ut
 import AddSale from './forms/AddPurchase';
 
 // assets
-import { IconShoppingCart, IconSearch, IconTrash, IconDots, IconUserEdit } from '@tabler/icons-react';
+import { IconPlus, IconSearch, IconTrash } from '@tabler/icons-react';
 
 // third-party
 import moment from 'moment';
@@ -87,6 +90,20 @@ const headCells = [
 const Purchase = () => {
   const dispatch = useDispatch();
 
+  // inventory
+  const [inventory, setInventory] = useState([]);
+  const [selectInventory, setSelectInventory] = useState('semua');
+  const { inventoriesFilter, loadingInventoryFilter } = useSelector((state) => state.inventory);
+
+  useEffect(() => {
+    setSelectInventory('semua');
+    dispatch(getFilterInventories());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setInventory(inventoriesFilter);
+  }, [inventoriesFilter]);
+
   // data
   const [rows, setRows] = useState([]);
   const [order, setOrder] = useState('desc');
@@ -97,8 +114,12 @@ const Purchase = () => {
   const { transactionsPurchase, loadingTransaction } = useSelector((state) => state.transaction);
 
   useEffect(() => {
-    dispatch(getTransactions(`?type=purchase`));
-  }, [dispatch]);
+    if (selectInventory === 'semua') {
+      dispatch(getTransactions(`?type=purchase`));
+    } else {
+      dispatch(getTransactions(`?type=purchase&id_product=${selectInventory}`));
+    }
+  }, [dispatch, selectInventory, setSelectInventory]);
 
   useEffect(() => {
     setRows(transactionsPurchase);
@@ -132,108 +153,129 @@ const Purchase = () => {
         </Grid>
         <Grid item xs={12}>
           <MainCard>
-            <Stack gap={2}>
-              <Stack direction="row" justifyContent="space-between">
-                <OutlinedInput
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  sx={{ maxWidth: 300 }}
-                  size="small"
-                  placeholder="Cari"
-                  endAdornment={
-                    <InputAdornment position="end">
-                      {search ? (
-                        <IconButton color="error" onClick={() => setSearch('')}>
-                          <IconTrash stroke={2} size="20px" />
-                        </IconButton>
-                      ) : (
-                        <IconSearch stroke={2} size="20px" />
-                      )}
-                    </InputAdornment>
-                  }
-                />
-                <Button
-                  size="medium"
-                  variant="contained"
-                  endIcon={<IconShoppingCart />}
-                  sx={{ width: 'fit-content', px: 3 }}
-                  onClick={() => setOpenAdd(true)}
-                >
-                  Tambah Pembelian
-                </Button>
-              </Stack>
-
-              {/* table */}
-              <TableContainer>
-                <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-                  <EnhancedTableHead
-                    headCells={headCells}
-                    order={order}
-                    orderBy={orderBy}
-                    onRequestSort={(e, property) => handleRequestSort(e, property, order, setOrder, orderBy, setOrderBy)}
-                    rowCount={rows?.length}
+            {loadingInventoryFilter ? (
+              <Grid item xs={12} my={2} display="flex" alignContent="center" justifyContent="center">
+                <CircularProgress />
+              </Grid>
+            ) : (
+              <Stack gap={2}>
+                <Stack direction="row" justifyContent="space-between">
+                  <OutlinedInput
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    sx={{ maxWidth: 300 }}
+                    size="small"
+                    placeholder="Cari"
+                    endAdornment={
+                      <InputAdornment position="end">
+                        {search ? (
+                          <IconButton color="error" onClick={() => setSearch('')}>
+                            <IconTrash stroke={2} size="20px" />
+                          </IconButton>
+                        ) : (
+                          <IconSearch stroke={2} size="20px" />
+                        )}
+                      </InputAdornment>
+                    }
                   />
+                  <Select
+                    size="small"
+                    sx={{ width: '15%' }}
+                    labelId="filter"
+                    id="filter"
+                    value={selectInventory}
+                    onChange={(event) => setSelectInventory(event.target.value)}
+                  >
+                    <MenuItem value={'semua'}>Semua</MenuItem>
+                    {inventory?.map((item, index) => (
+                      <MenuItem value={item?.id} key={index} sx={{ textTransform: 'capitalize' }}>
+                        {item?.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  <Button
+                    size="medium"
+                    variant="contained"
+                    endIcon={<IconPlus />}
+                    sx={{ width: 'fit-content', px: 3 }}
+                    onClick={() => setOpenAdd(true)}
+                  >
+                    Tambah Pembelian
+                  </Button>
+                </Stack>
 
-                  <TableBody>
-                    {stableSort(rows, getComparator(order, orderBy))
-                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                      .map((row, index) => {
-                        /** Make sure no display bugs if row isn't an OrderData object */
-                        if (typeof row === 'number') return null;
+                {/* table */}
+                <TableContainer>
+                  <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+                    <EnhancedTableHead
+                      headCells={headCells}
+                      order={order}
+                      orderBy={orderBy}
+                      onRequestSort={(e, property) => handleRequestSort(e, property, order, setOrder, orderBy, setOrderBy)}
+                      rowCount={rows?.length}
+                    />
 
-                        return (
-                          <TableRow hover key={index}>
-                            <TableCell align="center" component="th" scope="row">
-                              <>{page * rowsPerPage + index + 1}.</>
-                            </TableCell>
-                            <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-                              {row?.id}
-                            </TableCell>
-                            <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-                              {row?.name}
-                            </TableCell>
-                            <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-                              {row?.qty}
-                            </TableCell>
-                            <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-                              Rp {parseInt(row?.price)?.toLocaleString('id')}
-                            </TableCell>
-                            <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-                              {moment(row?.created).format('DD MMMM YYYY')}
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    {rows.length === 0 && loadingTransaction ? (
-                      <TableRow>
-                        <TableCell colSpan={6} align="center">
-                          <CircularProgress />
-                        </TableCell>
-                      </TableRow>
-                    ) : (
-                      rows.length === 0 &&
-                      !loadingTransaction && (
+                    <TableBody>
+                      {stableSort(rows, getComparator(order, orderBy))
+                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        .map((row, index) => {
+                          /** Make sure no display bugs if row isn't an OrderData object */
+                          if (typeof row === 'number') return null;
+
+                          return (
+                            <TableRow hover key={index}>
+                              <TableCell align="center" component="th" scope="row">
+                                <>{page * rowsPerPage + index + 1}.</>
+                              </TableCell>
+                              <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
+                                {row?.id}
+                              </TableCell>
+                              <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
+                                {row?.name}
+                              </TableCell>
+                              <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
+                                {row?.qty}
+                              </TableCell>
+                              <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
+                                Rp {parseInt(row?.price)?.toLocaleString('id')}
+                              </TableCell>
+                              <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
+                                {moment(row?.created).format('DD MMMM YYYY')}
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      {rows.length === 0 && loadingTransaction ? (
                         <TableRow>
                           <TableCell colSpan={6} align="center">
-                            <Typography variant="subtitle2">Tidak ada data tersedia</Typography>
+                            <CircularProgress />
                           </TableCell>
                         </TableRow>
-                      )
-                    )}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              {/* table pagination */}
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-            </Stack>
+                      ) : (
+                        rows.length === 0 &&
+                        !loadingTransaction && (
+                          <TableRow>
+                            <TableCell colSpan={6} align="center">
+                              <Typography variant="subtitle2">Tidak ada data tersedia</Typography>
+                            </TableCell>
+                          </TableRow>
+                        )
+                      )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+                {/* table pagination */}
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25]}
+                  component="div"
+                  count={rows.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </Stack>
+            )}
           </MainCard>
         </Grid>
       </Grid>

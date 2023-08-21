@@ -14,11 +14,13 @@ const initialState = {
   errorDelete: null,
 
   loadingCategory: false,
+  loadingCategoryFilter: false,
   loadingLog: false,
   loadingCreate: false,
   loadingUpdate: false,
   loadingDelete: false,
   categories: [],
+  categoriesFilter: [],
 };
 
 const slice = createSlice({
@@ -28,6 +30,9 @@ const slice = createSlice({
     // LOADING
     loadingCategory(state, action) {
       state.loadingCategory = action.payload;
+    },
+    loadingCategoryFilter(state, action) {
+      state.loadingCategoryFilter = action.payload;
     },
     loadingLog(state, action) {
       state.loadingLog = action.payload;
@@ -60,6 +65,9 @@ const slice = createSlice({
     getCategoriesSuccess(state, action) {
       state.categories = action.payload;
     },
+    getCategoriesFilterSuccess(state, action) {
+      state.categoriesFilter = action.payload;
+    },
   },
 });
 
@@ -78,6 +86,20 @@ export function getCategories(param) {
     } catch (error) {
       dispatch(slice.actions.hasError(error));
       dispatch(slice.actions.loadingCategory(false));
+    }
+  };
+}
+
+export function getFilterCategories(param) {
+  return async () => {
+    try {
+      dispatch(slice.actions.loadingCategoryFilter(true));
+      const response = await axios.get(`/category/filter${param || ''}`);
+      dispatch(slice.actions.getCategoriesFilterSuccess(response.data.data));
+      dispatch(slice.actions.loadingCategoryFilter(false));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+      dispatch(slice.actions.loadingCategoryFilter(false));
     }
   };
 }
