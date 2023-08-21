@@ -25,7 +25,7 @@ import {
 
 // api
 import { useDispatch, useSelector } from '@/store';
-import { getCategories, deleteCategory } from '@/store/slices/Category';
+import { getCategories, deleteCategory } from '@/store/slices/category';
 
 // project import
 import MainCard from '@/ui-component/cards/MainCard';

@@ -6,7 +6,7 @@ import { LoadingButton } from '@mui/lab';
 
 // api
 import { useDispatch, useSelector } from '@/store';
-import { getCategories, createCategory } from '@/store/slices/Category';
+import { getCategories, createCategory } from '@/store/slices/category';
 
 // third party
 import * as yup from 'yup';

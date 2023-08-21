@@ -26,8 +26,8 @@ import {
 } from '@mui/material';
 
 import { useDispatch, useSelector } from '@/store';
-import { getInventories, deleteInventory } from '@/store/slices/Inventory';
-import { getCategories } from '@/store/slices/Category';
+import { getInventories, deleteInventory } from '@/store/slices/inventory';
+import { getCategories } from '@/store/slices/category';
 
 // project import
 import MainCard from '@/ui-component/cards/MainCard';
