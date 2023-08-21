@@ -13,7 +13,7 @@ export const login = async (payload) => {
 
 export const getUserDetail = async () => {
   try {
-    const response = await axios.get('/user');
+    const response = await axios.get('/user/all');
     return response;
   } catch (errors) {
     return errors.response;
