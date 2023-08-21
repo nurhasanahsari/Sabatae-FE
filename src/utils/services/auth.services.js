@@ -40,7 +40,7 @@ export const logoutUser = async () => {
     const response = await axios.post('auth/logout');
     if (response.status === 200) {
       purgeToken();
-      window.location.href = '/login';
+      window.location.href = '/';
     }
     return response;
   } catch (errors) {

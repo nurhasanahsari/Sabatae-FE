@@ -90,6 +90,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  if (state.isInitialized !== undefined && !state.isInitialized) {
+    return <Loader />;
+  }
+
   return (
     <AuthContext.Provider
       value={{
