@@ -94,15 +94,15 @@ const Purchase = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const { transactions, loadingTransaction } = useSelector((state) => state.transaction);
+  const { transactionsPurchase, loadingTransaction } = useSelector((state) => state.transaction);
 
   useEffect(() => {
     dispatch(getTransactions(`?type=purchase`));
   }, [dispatch]);
 
   useEffect(() => {
-    setRows(transactions);
-  }, [transactions]);
+    setRows(transactionsPurchase);
+  }, [transactionsPurchase]);
 
   // action dialog
   const [openAdd, setOpenAdd] = useState(false);
@@ -120,7 +120,7 @@ const Purchase = () => {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    handleSearch(search, setPage, ['name'], rows, setRows, transactions);
+    handleSearch(search, setPage, ['name'], rows, setRows, transactionsPurchase);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 

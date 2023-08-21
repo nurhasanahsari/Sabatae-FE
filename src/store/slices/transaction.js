@@ -18,7 +18,8 @@ const initialState = {
   loadingCreate: false,
   loadingUpdate: false,
   loadingDelete: false,
-  transactions: [],
+  transactionsPurchase: [],
+  transactionsSale: [],
 };
 
 const slice = createSlice({
@@ -57,8 +58,11 @@ const slice = createSlice({
     },
 
     // SUCCESS
-    getTransactionsSuccess(state, action) {
-      state.transactions = action.payload;
+    getTransactionsPurchaseSuccess(state, action) {
+      state.transactionsPurchase = action.payload;
+    },
+    getTransactionsSaleSuccess(state, action) {
+      state.transactionsSale = action.payload;
     },
   },
 });
@@ -73,7 +77,11 @@ export function getTransactions(param) {
     try {
       dispatch(slice.actions.loadingTransaction(true));
       const response = await axios.get(`/transaction/table${param || ''}`);
-      dispatch(slice.actions.getTransactionsSuccess(response.data.data));
+      if (param === '?type=purchase') {
+        dispatch(slice.actions.getTransactionsPurchaseSuccess(response.data.data));
+      } else {
+        dispatch(slice.actions.getTransactionsSaleSuccess(response.data.data));
+      }
       dispatch(slice.actions.loadingTransaction(false));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
