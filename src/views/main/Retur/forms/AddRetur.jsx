@@ -2,16 +2,12 @@ import { useState, useEffect } from 'react';
 
 // material ui
 import { useTheme } from '@mui/system';
-import { Grid, Stack, Button, Typography, TextField, Alert, MenuItem, CircularProgress, IconButton } from '@mui/material';
+import { Grid, Stack, Button, Typography, TextField, Alert, CircularProgress, IconButton } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
 // api
 import { useDispatch, useSelector } from '@/store';
 import { getTransactionsRetur, getTransactions, createTransactionRetur } from '@/store/slices/transaction';
-import { getInventories } from '@/store/slices/inventory';
-
-// project imports
-import useAuth from '@/hooks/useAuth';
 
 // third party
 import { useFormik } from 'formik';
