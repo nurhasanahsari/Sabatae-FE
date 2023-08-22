@@ -253,7 +253,7 @@ const Retur = () => {
                                 {row?.reason || ''}
                               </TableCell>
                               <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-                                {moment(row?.created).format('DD MMMM YYYY - HH:MM')}
+                                {moment(row?.updated).format('DD MMMM YYYY - HH:MM')}
                               </TableCell>
                             </TableRow>
                           );

@@ -21,28 +21,30 @@ import { IconSearch } from '@tabler/icons-react';
 
 const AddRetur = ({ onClose }) => {
   const theme = useTheme();
-  const dispatch = useDispatch();
+  const dispatch2 = useDispatch();
 
   // search transaction
+  const [searchKey, setSearchKey] = useState(false);
   const [idSale, setIdSale] = useState('');
-  const [transactionRetur, setTransactionRetur] = useState();
+  const [transactionRetur, setTransactionRetur] = useState({});
   const [openAlertReason, setOpenAlertReason] = useState(false);
-  const { transactionsRetur, loadingTransactionRetur, loadingCreate, errorCreate, error } = useSelector((state) => state.transaction);
+  const { transactionsRetur2, loadingTransactionRetur, loadingCreate, errorCreate } = useSelector((state) => state.transaction);
 
   const handleChangeIdSale = (event) => {
     setIdSale(event.target.value);
   };
 
   const handleSearchTransaction = async () => {
-    setTransactionRetur();
-    await dispatch(getTransactionsRetur(`?id=${idSale}`));
+    setSearchKey(true);
+    await dispatch2(getTransactionsRetur(`?id=${idSale}`));
   };
 
   useEffect(() => {
-    setTransactionRetur(transactionsRetur);
+    if (searchKey) {
+      setTransactionRetur(transactionsRetur2);
+    }
     setOpenAlertReason(false);
-  }, [transactionsRetur]);
-  console.log(transactionsRetur);
+  }, [transactionsRetur2]);
 
   // formik
   const [isDone, setIsDone] = useState(false);
@@ -60,16 +62,19 @@ const AddRetur = ({ onClose }) => {
       if (formik?.values?.reason === '') {
         setOpenAlertReason(true);
       } else {
-        await dispatch(createTransactionRetur(values));
+        await dispatch2(createTransactionRetur(values));
         setIsDone(true);
       }
+      setSearchKey(false);
       setLoadingTransaction2(false);
     },
   });
 
   useEffect(() => {
     if (!errorCreate && !loadingCreate && isDone) {
-      dispatch(getTransactions(`?type=retur`));
+      dispatch2(getTransactions(`?type=retur`));
+      setTransactionRetur({});
+      setIdSale('');
       onClose();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -112,7 +117,7 @@ const AddRetur = ({ onClose }) => {
                 ),
               }}
             />
-            {transactionsRetur === 'data tidak ditemukan' && (
+            {transactionsRetur2 === 'Data tidak ditemukan' && (
               <Typography variant="h6" textAlign="center" sx={{ color: theme.palette.error.main }}>
                 Transaksi tidak ditemukan
               </Typography>
@@ -180,7 +185,7 @@ const AddRetur = ({ onClose }) => {
               </Button>
               <LoadingButton
                 loading={formik.isSubmitting}
-                disabled={loadingTransaction2 || transactionsRetur === 'data tidak ditemukan' || formik?.values?.reason === ''}
+                disabled={loadingTransaction2 || transactionsRetur2 === 'Data tidak ditemukan' || formik?.values?.reason === ''}
                 type="submit"
                 variant="contained"
               >

@@ -22,6 +22,7 @@ const initialState = {
   transactionsPurchase: [],
   transactionsSale: [],
   transactionsRetur: [],
+  transactionsRetur2: [],
 };
 
 const slice = createSlice({
@@ -72,6 +73,9 @@ const slice = createSlice({
     getTransactionsReturSuccess(state, action) {
       state.transactionsRetur = action.payload;
     },
+    getTransactionsRetur2Success(state, action) {
+      state.transactionsRetur2 = action.payload;
+    },
   },
 });
 
@@ -106,9 +110,9 @@ export function getTransactionsRetur(param) {
       dispatch(slice.actions.loadingTransactionRetur(true));
       const response = await axios.get(`/transaction/all${param || ''}`);
       if (response?.data?.data?.length === 0) {
-        dispatch(slice.actions.getTransactionsReturSuccess('Data tidak ditemukan'));
+        dispatch(slice.actions.getTransactionsRetur2Success('Data tidak ditemukan'));
       } else {
-        dispatch(slice.actions.getTransactionsReturSuccess(response?.data?.data[0]));
+        dispatch(slice.actions.getTransactionsRetur2Success(response?.data?.data[0]));
       }
       dispatch(slice.actions.loadingTransactionRetur(false));
     } catch (error) {
