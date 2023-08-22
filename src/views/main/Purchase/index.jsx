@@ -53,7 +53,7 @@ const headCells = [
   {
     id: 'id',
     numeric: false,
-    label: 'Kode Barang',
+    label: 'Kode Transaksi',
     align: 'center',
     sortable: false,
   },
@@ -231,7 +231,10 @@ const Purchase = () => {
                                 {row?.id}
                               </TableCell>
                               <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-                                {row?.name}
+                                <Stack direction="column">
+                                  {row?.name}
+                                  <Typography variant="caption">{row?.id_product}</Typography>
+                                </Stack>
                               </TableCell>
                               <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
                                 {row?.qty}
@@ -240,7 +243,7 @@ const Purchase = () => {
                                 Rp {parseInt(row?.price)?.toLocaleString('id')}
                               </TableCell>
                               <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-                                {moment(row?.created).format('DD MMMM YYYY')}
+                                {moment(row?.created).format('DD MMMM YYYY - HH:MM')}
                               </TableCell>
                             </TableRow>
                           );

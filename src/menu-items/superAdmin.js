@@ -95,7 +95,7 @@ const superAdmin = {
     },
     {
       id: 'retur',
-      title: 'Retur Penjualan',
+      title: 'Retur Barang',
       type: 'item',
       url: '/super-admin/retur',
       icon: icons.IconReceiptRefund,

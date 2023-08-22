@@ -14,12 +14,14 @@ const initialState = {
   errorDelete: null,
 
   loadingTransaction: false,
+  loadingTransactionRetur: false,
   loadingLog: false,
   loadingCreate: false,
   loadingUpdate: false,
   loadingDelete: false,
   transactionsPurchase: [],
   transactionsSale: [],
+  transactionsRetur: [],
 };
 
 const slice = createSlice({
@@ -29,6 +31,9 @@ const slice = createSlice({
     // LOADING
     loadingTransaction(state, action) {
       state.loadingTransaction = action.payload;
+    },
+    loadingTransactionRetur(state, action) {
+      state.loadingTransactionRetur = action.payload;
     },
     loadingLog(state, action) {
       state.loadingLog = action.payload;
@@ -64,6 +69,9 @@ const slice = createSlice({
     getTransactionsSaleSuccess(state, action) {
       state.transactionsSale = action.payload;
     },
+    getTransactionsReturSuccess(state, action) {
+      state.transactionsRetur = action.payload;
+    },
   },
 });
 
@@ -79,13 +87,33 @@ export function getTransactions(param) {
       const response = await axios.get(`/transaction/table${param || ''}`);
       if (param === '?type=purchase') {
         dispatch(slice.actions.getTransactionsPurchaseSuccess(response.data.data));
-      } else {
+      } else if (param === '?type=sale') {
         dispatch(slice.actions.getTransactionsSaleSuccess(response.data.data));
+      } else {
+        dispatch(slice.actions.getTransactionsReturSuccess(response.data.data));
       }
       dispatch(slice.actions.loadingTransaction(false));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
       dispatch(slice.actions.loadingTransaction(false));
+    }
+  };
+}
+
+export function getTransactionsRetur(param) {
+  return async () => {
+    try {
+      dispatch(slice.actions.loadingTransactionRetur(true));
+      const response = await axios.get(`/transaction/all${param || ''}`);
+      if (response?.data?.data?.length === 0) {
+        dispatch(slice.actions.getTransactionsReturSuccess('Data tidak ditemukan'));
+      } else {
+        dispatch(slice.actions.getTransactionsReturSuccess(response?.data?.data[0]));
+      }
+      dispatch(slice.actions.loadingTransactionRetur(false));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+      dispatch(slice.actions.loadingTransactionRetur(false));
     }
   };
 }
@@ -96,6 +124,32 @@ export function createTransaction(body) {
       dispatch(slice.actions.hasErrorCreate(null));
       dispatch(slice.actions.loadingCreate(true));
       const res = await axios.post(`/transaction`, body);
+      dispatch(
+        openSnackbar({
+          open: true,
+          message: res.data?.message,
+          variant: 'alert',
+          alert: {
+            color: 'success',
+          },
+          close: true,
+        })
+      );
+      dispatch(slice.actions.hasErrorCreate(null));
+      dispatch(slice.actions.loadingCreate(false));
+    } catch (error) {
+      dispatch(slice.actions.hasErrorCreate(error.response.data));
+      dispatch(slice.actions.loadingCreate(false));
+    }
+  };
+}
+
+export function createTransactionRetur(body) {
+  return async () => {
+    try {
+      dispatch(slice.actions.hasErrorCreate(null));
+      dispatch(slice.actions.loadingCreate(true));
+      const res = await axios.post(`/transaction/retur`, body);
       dispatch(
         openSnackbar({
           open: true,

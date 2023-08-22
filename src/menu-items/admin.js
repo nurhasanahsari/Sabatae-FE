@@ -85,7 +85,7 @@ const admin = {
     },
     {
       id: 'retur',
-      title: 'Retur Penjualan',
+      title: 'Retur Barang',
       type: 'item',
       url: '/admin/retur',
       icon: icons.IconReceiptRefund,
