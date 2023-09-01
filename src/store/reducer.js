@@ -8,6 +8,7 @@ import categoryReducer from './slices/category';
 import inventoryReducer from './slices/inventory';
 import mainReducer from './slices/main';
 import menuReducer from './slices/menu';
+import SummaryReducer from './slices/summary';
 import snackbarReducer from './slices/snackbar';
 import transactionReducer from './slices/transaction';
 import userReducer from './slices/user';
@@ -29,6 +30,7 @@ const reducer = combineReducers({
   category: categoryReducer,
   inventory: inventoryReducer,
   menu: menuReducer,
+  summary: SummaryReducer,
   snackbar: snackbarReducer,
   transaction: transactionReducer,
   user: userReducer,
