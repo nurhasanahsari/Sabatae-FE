@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from '@/store';
 import { getSummary } from '@/store/slices/summary';
 
 // assets
+import IcMoney from '@/assets/images/pages/ic_money.png';
 import IcIncome from '@/assets/images/pages/ic_income.png';
 import IcProfit from '@/assets/images/pages/ic_profit.png';
 import IcDeficit from '@/assets/images/pages/ic_deficit.png';
@@ -74,7 +75,7 @@ const Dashboard = () => {
                   )}
                   <Typography variant="h4">Sisa Modal</Typography>
                 </Stack>
-                <Box component="img" src={IcIncome} width={80} height={80} />
+                <Box component="img" src={IcMoney} width={80} height={80} />
               </Stack>
             </MainCard>
           </Stack>
