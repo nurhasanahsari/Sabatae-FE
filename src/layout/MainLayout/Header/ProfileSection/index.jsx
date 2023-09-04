@@ -31,7 +31,7 @@ import AlertDialog from '@/ui-component/extended/AlertDialog';
 import greeting from '@/utils/greeting';
 
 // assets
-import { IconLogout } from '@tabler/icons-react';
+import { IconLogout, IconCaretDown } from '@tabler/icons-react';
 import useConfig from '@/hooks/useConfig';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
@@ -134,7 +134,7 @@ const ProfileSection = () => {
               )}
             </Stack>
           )}
-          <KeyboardArrowDownIcon ref={anchorRef} aria-controls={open ? 'menu-list-grow' : undefined} aria-haspopup="true" color="text.light" />
+          <IconCaretDown ref={anchorRef} aria-controls={open ? 'menu-list-grow' : undefined} aria-haspopup="true" color="#fff" />
         </Stack>
       </ButtonBase>
 
@@ -149,7 +149,7 @@ const ProfileSection = () => {
           {
             name: 'offset',
             options: {
-              offset: [0, 14],
+              offset: [-140, 20],
             },
           },
         ]}

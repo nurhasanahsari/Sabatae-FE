@@ -40,12 +40,9 @@ const MainCard = React.forwardRef(
         sx={{
           border: border ? '1px solid' : 'none',
           borderColor: theme.palette.mode === 'dark' ? theme.palette.background.default : theme.palette.grey[300] + 98,
-          ':hover': {
-            boxShadow: boxShadow
-              ? shadow || (theme.palette.mode === 'dark' ? '0 2px 14px 0 rgb(33 150 243 / 10%)' : '0 2px 14px 0 rgb(32 40 45 / 8%)')
-              : 'inherit',
-          },
-          boxShadow: '0px 0px 14px 0px rgba(0,0,0,0.05)',
+          boxShadow: boxShadow
+            ? shadow || (theme.palette.mode === 'dark' ? '0 2px 14px 0 rgb(33 150 243 / 10%)' : '0 2px 14px 0 rgb(32 40 45 / 8%)')
+            : 'inherit',
           ...sx,
         }}
       >

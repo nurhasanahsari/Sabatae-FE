@@ -165,7 +165,7 @@ const Report = () => {
   return (
     <Grid container gap={2}>
       <Grid item xs={12}>
-        <Typography variant="h2">Report Barang</Typography>
+        <Typography variant="h2">Data Laporan</Typography>
       </Grid>
       <Grid item xs={12}>
         <MainCard>
