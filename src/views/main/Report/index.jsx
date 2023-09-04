@@ -287,7 +287,7 @@ const Report = () => {
                     })}
                   {rows.length === 0 && loadingTransaction ? (
                     <TableRow>
-                      <TableCell colSpan={6} align="center">
+                      <TableCell colSpan={8} align="center">
                         <CircularProgress />
                       </TableCell>
                     </TableRow>
@@ -295,7 +295,7 @@ const Report = () => {
                     rows.length === 0 &&
                     !loadingTransaction && (
                       <TableRow>
-                        <TableCell colSpan={6} align="center">
+                        <TableCell colSpan={8} align="center">
                           <Typography variant="subtitle2">Tidak ada data tersedia</Typography>
                         </TableCell>
                       </TableRow>
