@@ -73,7 +73,14 @@ const LoginForm = ({ ...others }) => {
             <Stack gap={3}>
               <Stack gap={1}>
                 <Typography>Email</Typography>
-                <TextField placeholder="Tuliskan Email" name="email" value={values.email} onBlur={handleBlur} onChange={handleChange} />
+                <TextField
+                  placeholder="Tuliskan Email"
+                  name="email"
+                  value={values.email}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  disabled={loadingLogin}
+                />
                 {touched.email && errors.email && (
                   <FormHelperText error id="standard-weight-helper-text-email-login">
                     {errors.email}
@@ -89,6 +96,7 @@ const LoginForm = ({ ...others }) => {
                   name="password"
                   onBlur={handleBlur}
                   onChange={handleChange}
+                  disabled={loadingLogin}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">

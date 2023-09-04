@@ -26,6 +26,7 @@
     "axios-mock-adapter": "^1.21.5",
     "crypto-js": "^4.1.1",
     "csstype": "^3.1.2",
+    "file-saver": "^2.0.5",
     "framer-motion": "^10.12.18",
     "formik": "^2.2.9",
     "interweave": "^13.1.0",
@@ -44,6 +45,7 @@
     "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.7.12",
     "web-vitals": "^3.3.2",
+    "xlsx": "^0.18.5",
     "yup": "^0.32.11"
   },
   "eslintConfig": {

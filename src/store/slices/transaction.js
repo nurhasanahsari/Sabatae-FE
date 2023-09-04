@@ -19,6 +19,7 @@ const initialState = {
   loadingCreate: false,
   loadingUpdate: false,
   loadingDelete: false,
+  transactions: [],
   transactionsPurchase: [],
   transactionsSale: [],
   transactionsRetur: [],
@@ -64,6 +65,9 @@ const slice = createSlice({
     },
 
     // SUCCESS
+    getTransactionsSuccess(state, action) {
+      state.transactions = action.payload;
+    },
     getTransactionsPurchaseSuccess(state, action) {
       state.transactionsPurchase = action.payload;
     },
@@ -93,8 +97,10 @@ export function getTransactions(param) {
         dispatch(slice.actions.getTransactionsPurchaseSuccess(response.data.data));
       } else if (param === '?type=sale') {
         dispatch(slice.actions.getTransactionsSaleSuccess(response.data.data));
-      } else {
+      } else if (param === '?type=retur') {
         dispatch(slice.actions.getTransactionsReturSuccess(response.data.data));
+      } else {
+        dispatch(slice.actions.getTransactionsSuccess(response.data.data));
       }
       dispatch(slice.actions.loadingTransaction(false));
     } catch (error) {
