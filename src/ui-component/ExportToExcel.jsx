@@ -17,7 +17,7 @@ const ExportToExcel = ({ apiData, customHeader, fileName, loading }) => {
 
   const exportToCSV = (apiData, fileName) => {
     const ws = XLSX.utils.json_to_sheet(apiData);
-    XLSX.utils.sheet_add_aoa(ws, [customHeader], { origin: 'A2' });
+    XLSX.utils.sheet_add_aoa(ws, [customHeader], { origin: 'A1' });
     const wb = { Sheets: { data: ws }, SheetNames: ['data'] };
     const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
     const data = new Blob([excelBuffer], { type: fileType });
