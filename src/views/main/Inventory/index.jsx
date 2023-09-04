@@ -8,6 +8,7 @@ import {
   Button,
   Typography,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogTitle,
   InputAdornment,
@@ -36,9 +37,10 @@ import EnhancedMenu from '@/ui-component/extended/EnhancedMenu';
 import AlertDialog from '@/ui-component/extended/AlertDialog';
 import AddInventory from './forms/AddInventory';
 import EditInventory from './forms/EditInventory';
+import DetailStock from './DetailStock';
 
 // assets
-import { IconSearch, IconTrash, IconDots, IconClipboardPlus, IconEdit } from '@tabler/icons-react';
+import { IconSearch, IconTrash, IconDots, IconClipboardPlus, IconEdit, IconClipboardList } from '@tabler/icons-react';
 
 // Table Header
 const headCells = [
@@ -130,6 +132,7 @@ const Inventory = () => {
   const [openAdd, setOpenAdd] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openDetailDialog, setOpenDetailDialog] = useState(false);
   const [anchorEl2, setAnchorEl2] = useState(null);
   const openAction = Boolean(anchorEl2);
   const [selectedInventory, setSelectedInventory] = useState([]);
@@ -278,6 +281,16 @@ const Inventory = () => {
                                   <MenuItem
                                     onClick={() => {
                                       setAnchorEl2(null);
+                                      setOpenDetailDialog(true);
+                                    }}
+                                    disableRipple
+                                  >
+                                    <IconClipboardList color={theme.palette.info.main} stroke={1.5} style={{ marginRight: 5 }} />
+                                    Lihat Detail Persediaan
+                                  </MenuItem>
+                                  <MenuItem
+                                    onClick={() => {
+                                      setAnchorEl2(null);
                                       setOpenEdit(true);
                                     }}
                                     disableRipple
@@ -371,6 +384,36 @@ const Inventory = () => {
           <Typography>Anda yakin ingin menghapus persediaan ini?</Typography>
         </AlertDialog>
       )}
+
+      {/* detail */}
+      <Dialog
+        maxWidth="md"
+        open={openDetailDialog}
+        onClose={() => {
+          setSelectedInventory('');
+          setOpenDetailDialog(false);
+        }}
+        fullWidth
+      >
+        <DialogTitle>Detail Persediaan</DialogTitle>
+        {openDetailDialog && (
+          <DialogContent>
+            <DetailStock data={selectedInventory} />
+          </DialogContent>
+        )}
+        <DialogActions>
+          <Button
+            size="small"
+            color="error"
+            onClick={() => {
+              setSelectedInventory('');
+              setOpenDetailDialog(false);
+            }}
+          >
+            Tutup
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

@@ -86,7 +86,7 @@ const Palette = (navType) => {
         hint: colors.grey100,
         light: colors.paper,
       },
-      divider: navType === 'dark' ? colors.darkTextPrimary : colors.grey200,
+      divider: navType === 'dark' ? colors.darkTextPrimary : colors.primary200,
       background: {
         paper: navType === 'dark' ? colors.darkLevel2 : colors.paper,
         default: navType === 'dark' ? colors.darkPaper : colors.paper,
