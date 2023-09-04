@@ -50,6 +50,8 @@ const AddRetur = ({ onClose }) => {
     enableReinitialize: true,
     initialValues: {
       id_sale: idSale || '',
+      id_product: transactionRetur?.id_product || '',
+      profit: transactionRetur?.price || 0,
       reason: '',
     },
     onSubmit: async (values) => {

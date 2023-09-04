@@ -170,50 +170,38 @@ const ProfileSection = () => {
                         </Stack>
                       </Stack>
                     </Box>
-                    <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 250px)', overflowX: 'hidden' }}>
-                      <Box sx={{ p: 2, pt: 0 }}>
-                        <Divider />
-                        <List
-                          component="nav"
-                          sx={{
-                            width: '100%',
-                            maxWidth: 300,
-                            minWidth: 250,
-                            borderRadius: '10px',
-                            [theme.breakpoints.down('md')]: {
-                              minWidth: '100%',
-                            },
-                            '& .MuiListItemButton-root': {
-                              mt: 0.5,
-                            },
+                    <Box sx={{ p: 2, pt: 0 }}>
+                      <Divider />
+                      <List
+                        component="nav"
+                        sx={{
+                          width: '100%',
+                          maxWidth: 300,
+                          minWidth: 250,
+                          borderRadius: '10px',
+                          [theme.breakpoints.down('md')]: {
+                            minWidth: '100%',
+                          },
+                          '& .MuiListItemButton-root': {
+                            mt: 0.5,
+                          },
+                        }}
+                      >
+                        <ListItemButton
+                          sx={{ borderRadius: `${borderRadius}px` }}
+                          selected={selectedIndex === 2}
+                          onClick={() => {
+                            setOpen(false);
+                            setOpenLogout(true);
                           }}
                         >
-                          {/* <ListItemButton
-                            sx={{ borderRadius: `${borderRadius}px` }}
-                            selected={selectedIndex === 0}
-                            onClick={(event) => handleListItemClick(event, 0, '/admin/profile')}
-                          >
-                            <ListItemIcon>
-                              <IconSettings stroke={1.5} size="20px" />
-                            </ListItemIcon>
-                            <ListItemText primary={<Typography variant="body2">Profil</Typography>} />
-                          </ListItemButton> */}
-                          <ListItemButton
-                            sx={{ borderRadius: `${borderRadius}px` }}
-                            selected={selectedIndex === 2}
-                            onClick={() => {
-                              setOpen(false);
-                              setOpenLogout(true);
-                            }}
-                          >
-                            <ListItemIcon>
-                              <IconLogout stroke={1.5} size="20px" />
-                            </ListItemIcon>
-                            <ListItemText primary={<Typography variant="body2">Keluar</Typography>} />
-                          </ListItemButton>
-                        </List>
-                      </Box>
-                    </PerfectScrollbar>
+                          <ListItemIcon>
+                            <IconLogout stroke={1.5} size="20px" />
+                          </ListItemIcon>
+                          <ListItemText primary={<Typography variant="body2">Keluar</Typography>} />
+                        </ListItemButton>
+                      </List>
+                    </Box>
                   </MainCard>
                 )}
               </Paper>

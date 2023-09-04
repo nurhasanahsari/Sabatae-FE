@@ -67,30 +67,9 @@ const headCells = [
     sortable: false,
   },
   {
-    id: 'qty',
-    numeric: false,
-    label: 'Jumlah Barang',
-    align: 'center',
-    sortable: false,
-  },
-  {
-    id: 'price',
-    numeric: false,
-    label: 'Harga',
-    align: 'center',
-    sortable: false,
-  },
-  {
-    id: 'reason',
-    numeric: false,
-    label: 'Alasan Report',
-    align: 'center',
-    sortable: false,
-  },
-  {
     id: 'created',
     numeric: false,
-    label: 'Tanggal',
+    label: 'Tanggal Transaksi',
     align: 'center',
     sortable: true,
   },
@@ -271,16 +250,7 @@ const Report = () => {
                             </Stack>
                           </TableCell>
                           <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-                            {row?.qty}
-                          </TableCell>
-                          <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-                            Rp {parseInt(row?.price)?.toLocaleString('id')}
-                          </TableCell>
-                          <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-                            {row?.reason || '-'}
-                          </TableCell>
-                          <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-                            {moment(row?.created).format('DD MMMM YYYY - HH:MM')}
+                            {moment(row?.type === 'retur' ? row?.updated : row?.created).format('DD MMMM YYYY - HH:MM')}
                           </TableCell>
                         </TableRow>
                       );

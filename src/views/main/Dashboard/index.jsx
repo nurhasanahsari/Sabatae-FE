@@ -55,14 +55,32 @@ const Dashboard = () => {
                       <CircularProgress />
                     </Typography>
                   ) : (
-                    <Typography variant="h2">Rp {parseInt(data?.total_purchase || 0)?.toLocaleString('id')}</Typography>
+                    <Typography variant="h2">Rp {parseInt(data?.first_capital || 0)?.toLocaleString('id')}</Typography>
                   )}
                   <Stack>
-                    <Typography variant="h4">Modal</Typography>
-                    <Typography variant="caption">Total uang modal</Typography>
+                    <Typography variant="h4">Modal Awal</Typography>
+                    <Typography variant="caption">Modal awal pembelian semua barang di persediaan</Typography>
                   </Stack>
                 </Stack>
                 <Box component="img" src={IcIncome} width={80} height={80} />
+              </Stack>
+            </MainCard>
+            <MainCard sx={{ width: '100%' }}>
+              <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%' }}>
+                <Stack gap={2} justifyItems="center">
+                  {loadingSummary ? (
+                    <Typography variant="h2">
+                      <CircularProgress />
+                    </Typography>
+                  ) : (
+                    <Typography variant="h2">Rp {parseInt(data?.remaining_capital || 0)?.toLocaleString('id')}</Typography>
+                  )}
+                  <Stack>
+                    <Typography variant="h4">Sisa Modal</Typography>
+                    <Typography variant="caption">Sisa Modal awal pembelian semua barang di persediaan</Typography>
+                  </Stack>
+                </Stack>
+                <Box component="img" src={IcMoney} width={80} height={80} />
               </Stack>
             </MainCard>
           </Stack>
@@ -76,16 +94,14 @@ const Dashboard = () => {
                       <CircularProgress />
                     </Typography>
                   ) : (
-                    <Typography variant="h2">
-                      Rp {parseInt(data?.total_sale - data?.total_purchase - data?.total_retur || 0)?.toLocaleString('id')}
-                    </Typography>
+                    <Typography variant="h2">Rp {parseInt(data?.total_profit || 0)?.toLocaleString('id')}</Typography>
                   )}
                   <Stack>
                     <Typography variant="h4">Total Keuntungan</Typography>
                     <Typography variant="caption">Jumlah keuntungan dari penjualan barang</Typography>
                   </Stack>
                 </Stack>
-                <Box component="img" src={IcMoney} width={80} height={80} />
+                <Box component="img" src={IcProfit} width={80} height={80} />
               </Stack>
             </MainCard>
             <MainCard sx={{ width: '100%', cursor: 'pointer' }} onClick={() => navigate(`/${user?.role === '01' ? 'super-admin' : 'admin'}/retur`)}>
@@ -96,7 +112,7 @@ const Dashboard = () => {
                       <CircularProgress />
                     </Typography>
                   ) : (
-                    <Typography variant="h2">Rp {data?.total_retur < 0 ? 0 : parseInt(data?.total_retur || 0)?.toLocaleString('id')}</Typography>
+                    <Typography variant="h2">Rp {parseInt(data?.total_deficit || 0)?.toLocaleString('id')}</Typography>
                   )}
                   <Stack>
                     <Typography variant="h4">Total Kerugian</Typography>

@@ -50,7 +50,7 @@ const AddSale = ({ onClose }) => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      id_product: selectInventory || '',
+      id_product: selectInventory?.id || '',
       qty: '',
       price: '',
       type: 'sale',
@@ -103,7 +103,7 @@ const AddSale = ({ onClose }) => {
                     Pilih barang
                   </MenuItem>
                   {inventories?.map((item, index) => (
-                    <MenuItem value={item?.id} key={index} sx={{ textTransform: 'capitalize' }}>
+                    <MenuItem value={item} key={index} sx={{ textTransform: 'capitalize' }}>
                       {item?.name}
                     </MenuItem>
                   ))}
@@ -117,6 +117,34 @@ const AddSale = ({ onClose }) => {
             </Grid>
             {selectInventory !== 0 && (
               <>
+                <Grid item xs={12}>
+                  <Stack spacing={1}>
+                    <Typography>Harga Satuan Barang</Typography>
+                    <TextField
+                      fullWidth
+                      type="number"
+                      id="qty"
+                      name="qty"
+                      placeholder="Jumlah"
+                      value={parseInt(selectInventory?.price_per_item)?.toLocaleString('id')}
+                      disabled
+                    />
+                  </Stack>
+                </Grid>
+                <Grid item xs={12}>
+                  <Stack spacing={1}>
+                    <Typography>Harga Pokok / Harga Net</Typography>
+                    <TextField
+                      fullWidth
+                      type="number"
+                      id="qty"
+                      name="qty"
+                      placeholder="Jumlah"
+                      value={parseInt(selectInventory?.price_per_item * formik?.values?.qty || 0)?.toLocaleString('id')}
+                      disabled
+                    />
+                  </Stack>
+                </Grid>
                 <Grid item xs={12}>
                   <Stack spacing={1}>
                     <Typography>Jumlah</Typography>
@@ -146,7 +174,7 @@ const AddSale = ({ onClose }) => {
                 </Grid>
                 <Grid item xs={12}>
                   <Stack spacing={1}>
-                    <Typography>Harga</Typography>
+                    <Typography>Harga Jual</Typography>
                     <TextField
                       fullWidth
                       type="number"

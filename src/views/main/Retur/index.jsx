@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 
 // material ui
+import { useTheme } from '@mui/system';
 import {
   Grid,
   Stack,
   Button,
   Typography,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogTitle,
   InputAdornment,
@@ -32,10 +34,12 @@ import { getFilterInventories } from '@/store/slices/inventory';
 import MainCard from '@/ui-component/cards/MainCard';
 import EnhancedTableHead from '@/ui-component/extended/EnhancedTableHead';
 import { getComparator, stableSort, handleSearch, handleRequestSort } from '@/utils/tableHelper';
+import EnhancedMenu from '@/ui-component/extended/EnhancedMenu';
 import AddRetur from './forms/AddRetur';
+import DetailRetur from './DetailRetur';
 
 // assets
-import { IconPlus, IconSearch, IconTrash } from '@tabler/icons-react';
+import { IconPlus, IconSearch, IconTrash, IconDots, IconClipboardList } from '@tabler/icons-react';
 
 // third-party
 import moment from 'moment';
@@ -65,36 +69,23 @@ const headCells = [
     sortable: false,
   },
   {
-    id: 'qty',
-    numeric: false,
-    label: 'Jumlah Barang',
-    align: 'center',
-    sortable: false,
-  },
-  {
-    id: 'price',
-    numeric: false,
-    label: 'Harga',
-    align: 'center',
-    sortable: false,
-  },
-  {
-    id: 'reason',
-    numeric: false,
-    label: 'Alasan Retur',
-    align: 'center',
-    sortable: false,
-  },
-  {
     id: 'created',
     numeric: false,
     label: 'Tanggal Retur',
     align: 'center',
     sortable: true,
   },
+  {
+    id: 'action',
+    numeric: false,
+    label: 'Aksi',
+    align: 'center',
+    sortable: false,
+  },
 ];
 
 const Retur = () => {
+  const theme = useTheme();
   const dispatch = useDispatch();
 
   // inventory
@@ -134,6 +125,19 @@ const Retur = () => {
 
   // action dialog
   const [openAdd, setOpenAdd] = useState(false);
+  const [openDetailDialog, setOpenDetailDialog] = useState(false);
+  const [anchorEl2, setAnchorEl2] = useState(null);
+  const openAction = Boolean(anchorEl2);
+  const [selectedRetur, setSelectedRetur] = useState([]);
+
+  const handleClickAction = (event, row) => {
+    setAnchorEl2(event.currentTarget);
+    setSelectedRetur(row);
+  };
+  const handleCloseAction = () => {
+    setAnchorEl2(null);
+    setSelectedRetur([]);
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -244,23 +248,47 @@ const Retur = () => {
                                 </Stack>
                               </TableCell>
                               <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-                                {row?.qty}
-                              </TableCell>
-                              <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-                                Rp {parseInt(row?.price)?.toLocaleString('id')}
-                              </TableCell>
-                              <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-                                {row?.reason || ''}
-                              </TableCell>
-                              <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
                                 {moment(row?.updated).format('DD MMMM YYYY - HH:MM')}
+                              </TableCell>
+                              <TableCell align="center">
+                                <IconButton
+                                  size="large"
+                                  id="demo-customized-button"
+                                  aria-controls={openAction ? 'demo-customized-menu' : undefined}
+                                  aria-haspopup="true"
+                                  aria-expanded={openAction ? 'true' : undefined}
+                                  // disableElevation
+                                  onClick={(e) => handleClickAction(e, row)}
+                                >
+                                  <IconDots style={{ fontSize: '1.3rem' }} />
+                                </IconButton>
+                                <EnhancedMenu
+                                  id="demo-customized-menu"
+                                  MenuListProps={{
+                                    'aria-labelledby': 'demo-customized-button',
+                                  }}
+                                  anchorEl={anchorEl2}
+                                  open={openAction}
+                                  onClose={handleCloseAction}
+                                >
+                                  <MenuItem
+                                    onClick={() => {
+                                      setAnchorEl2(null);
+                                      setOpenDetailDialog(true);
+                                    }}
+                                    disableRipple
+                                  >
+                                    <IconClipboardList color={theme.palette.info.main} stroke={1.5} style={{ marginRight: 5 }} />
+                                    Lihat Detail
+                                  </MenuItem>
+                                </EnhancedMenu>
                               </TableCell>
                             </TableRow>
                           );
                         })}
                       {rows.length === 0 && loadingTransaction ? (
                         <TableRow>
-                          <TableCell colSpan={6} align="center">
+                          <TableCell colSpan={4} align="center">
                             <CircularProgress />
                           </TableCell>
                         </TableRow>
@@ -268,7 +296,7 @@ const Retur = () => {
                         rows.length === 0 &&
                         !loadingTransaction && (
                           <TableRow>
-                            <TableCell colSpan={6} align="center">
+                            <TableCell colSpan={4} align="center">
                               <Typography variant="subtitle2">Tidak ada data tersedia</Typography>
                             </TableCell>
                           </TableRow>
@@ -300,6 +328,36 @@ const Retur = () => {
         <DialogContent>
           <AddRetur onClose={() => setOpenAdd(false)} />
         </DialogContent>
+      </Dialog>
+
+      {/* detail */}
+      <Dialog
+        maxWidth="md"
+        open={openDetailDialog}
+        onClose={() => {
+          setSelectedInventory('');
+          setOpenDetailDialog(false);
+        }}
+        fullWidth
+      >
+        <DialogTitle>Detail Retur</DialogTitle>
+        {openDetailDialog && (
+          <DialogContent>
+            <DetailRetur data={selectedInventory} />
+          </DialogContent>
+        )}
+        <DialogActions>
+          <Button
+            size="small"
+            color="error"
+            onClick={() => {
+              setSelectedRetur('');
+              setOpenDetailDialog(false);
+            }}
+          >
+            Tutup
+          </Button>
+        </DialogActions>
       </Dialog>
     </>
   );
