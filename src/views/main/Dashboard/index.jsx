@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Grid, Stack, Typography, CircularProgress } from '@mui/material';
 
 // project imports
+import useAuth from '@/hooks/useAuth';
 import MainCard from '@/ui-component/cards/MainCard';
 
 // api
@@ -20,6 +21,7 @@ import IcDeficit from '@/assets/images/pages/ic_deficit.png';
 const Dashboard = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
+  const { user } = useAuth();
 
   // data
   const [data, setData] = useState();
@@ -34,7 +36,7 @@ const Dashboard = () => {
   }, [summary]);
 
   return (
-    <Grid container gap={2}>
+    <Grid container gap={4}>
       <Grid item xs={12}>
         <Typography variant="h2">Dashboard</Typography>
       </Grid>
@@ -43,9 +45,8 @@ const Dashboard = () => {
           {/* 1 */}
           <Stack direction="row" justifyContent="center" gap={2}>
             <MainCard
-              sx={{
-                width: '100%',
-              }}
+              sx={{ width: '100%', cursor: 'pointer' }}
+              onClick={() => navigate(`/${user?.role === '01' ? 'super-admin' : 'admin'}/inventory`)}
             >
               <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%' }}>
                 <Stack gap={2} justifyItems="center">
@@ -56,11 +57,17 @@ const Dashboard = () => {
                   ) : (
                     <Typography variant="h2">Rp {parseInt(data?.total_purchase || 0)?.toLocaleString('id')}</Typography>
                   )}
-                  <Typography variant="h4">Modal Awal</Typography>
+                  <Stack>
+                    <Typography variant="h4">Modal</Typography>
+                    <Typography variant="caption">Total uang modal</Typography>
+                  </Stack>
                 </Stack>
                 <Box component="img" src={IcIncome} width={80} height={80} />
               </Stack>
             </MainCard>
+          </Stack>
+          {/* 2 */}
+          <Stack direction="row" justifyContent="center" gap={2}>
             <MainCard sx={{ width: '100%' }}>
               <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%' }}>
                 <Stack gap={2} justifyItems="center">
@@ -70,33 +77,18 @@ const Dashboard = () => {
                     </Typography>
                   ) : (
                     <Typography variant="h2">
-                      Rp {parseInt(data?.total_purchase - data?.total_sale - data?.total_retur || 0)?.toLocaleString('id')}
+                      Rp {parseInt(data?.total_sale - data?.total_purchase - data?.total_retur || 0)?.toLocaleString('id')}
                     </Typography>
                   )}
-                  <Typography variant="h4">Sisa Modal</Typography>
+                  <Stack>
+                    <Typography variant="h4">Total Keuntungan</Typography>
+                    <Typography variant="caption">Jumlah keuntungan dari penjualan barang</Typography>
+                  </Stack>
                 </Stack>
                 <Box component="img" src={IcMoney} width={80} height={80} />
               </Stack>
             </MainCard>
-          </Stack>
-          {/* 2 */}
-          <Stack direction="row" justifyContent="center" gap={2}>
-            <MainCard sx={{ width: '100%', cursor: 'pointer' }} onClick={() => navigate('/super-admin/sale')}>
-              <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%' }}>
-                <Stack gap={2} justifyItems="center">
-                  {loadingSummary ? (
-                    <Typography variant="h2">
-                      <CircularProgress />
-                    </Typography>
-                  ) : (
-                    <Typography variant="h2">Rp {data?.total_sale < 0 ? 0 : parseInt(data?.total_sale || 0)?.toLocaleString('id')}</Typography>
-                  )}
-                  <Typography variant="h4">Total Penjualan</Typography>
-                </Stack>
-                <Box component="img" src={IcProfit} width={80} height={80} />
-              </Stack>
-            </MainCard>
-            <MainCard sx={{ width: '100%', cursor: 'pointer' }} onClick={() => navigate('/super-admin/retur')}>
+            <MainCard sx={{ width: '100%', cursor: 'pointer' }} onClick={() => navigate(`/${user?.role === '01' ? 'super-admin' : 'admin'}/retur`)}>
               <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%' }}>
                 <Stack gap={2} justifyItems="center">
                   {loadingSummary ? (
@@ -106,7 +98,10 @@ const Dashboard = () => {
                   ) : (
                     <Typography variant="h2">Rp {data?.total_retur < 0 ? 0 : parseInt(data?.total_retur || 0)?.toLocaleString('id')}</Typography>
                   )}
-                  <Typography variant="h4">Total Kerugian</Typography>
+                  <Stack>
+                    <Typography variant="h4">Total Kerugian</Typography>
+                    <Typography variant="caption">Jumlah kerugian dari barang yang di retur</Typography>
+                  </Stack>
                 </Stack>
                 <Box component="img" src={IcDeficit} width={80} height={80} />
               </Stack>
@@ -114,7 +109,10 @@ const Dashboard = () => {
           </Stack>
           {/* 3 */}
           <Stack direction="row" justifyContent="center" gap={2}>
-            <MainCard sx={{ width: '100%', cursor: 'pointer' }} onClick={() => navigate('/super-admin/purchase')}>
+            <MainCard
+              sx={{ width: '100%', cursor: 'pointer' }}
+              onClick={() => navigate(`/${user?.role === '01' ? 'super-admin' : 'admin'}/purchase`)}
+            >
               <Stack alignItems="center" gap={2}>
                 {loadingSummary ? (
                   <Typography variant="h3">
@@ -123,10 +121,10 @@ const Dashboard = () => {
                 ) : (
                   <Typography variant="h3">{parseInt(data?.purchase || 0)}</Typography>
                 )}
-                <Typography variant="h4">Total Pembelian</Typography>
+                <Typography variant="h4">Jumlah Transaksi Pembelian</Typography>
               </Stack>
             </MainCard>
-            <MainCard sx={{ width: '100%', cursor: 'pointer' }} onClick={() => navigate('/super-admin/sale')}>
+            <MainCard sx={{ width: '100%', cursor: 'pointer' }} onClick={() => navigate(`/${user?.role === '01' ? 'super-admin' : 'admin'}/sale`)}>
               <Stack alignItems="center" gap={2}>
                 {loadingSummary ? (
                   <Typography variant="h3">
@@ -135,10 +133,10 @@ const Dashboard = () => {
                 ) : (
                   <Typography variant="h3">{parseInt(data?.sale || 0)}</Typography>
                 )}
-                <Typography variant="h4">Total Penjualan</Typography>
+                <Typography variant="h4">Jumlah Transaksi Penjualan</Typography>
               </Stack>
             </MainCard>
-            <MainCard sx={{ width: '100%', cursor: 'pointer' }} onClick={() => navigate('/super-admin/retur')}>
+            <MainCard sx={{ width: '100%', cursor: 'pointer' }} onClick={() => navigate(`/${user?.role === '01' ? 'super-admin' : 'admin'}/retur`)}>
               <Stack alignItems="center" gap={2}>
                 {loadingSummary ? (
                   <Typography variant="h3">
@@ -147,7 +145,7 @@ const Dashboard = () => {
                 ) : (
                   <Typography variant="h3">{parseInt(data?.retur || 0)}</Typography>
                 )}
-                <Typography variant="h4">Total Retur</Typography>
+                <Typography variant="h4">Jumlah Transaksi Retur</Typography>
               </Stack>
             </MainCard>
           </Stack>

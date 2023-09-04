@@ -51,8 +51,8 @@ const AddPurchase = ({ onClose }) => {
     enableReinitialize: true,
     initialValues: {
       id_product: selectInventory || '',
-      qty: 0,
-      price: 0,
+      qty: '',
+      price: '',
       type: 'purchase',
       id_client: user?.id,
     },
@@ -152,7 +152,7 @@ const AddPurchase = ({ onClose }) => {
                       type="number"
                       id="price"
                       name="price"
-                      placeholder="Jumlah"
+                      placeholder="Total Harga"
                       value={formik.values.price}
                       onChange={formik.handleChange}
                       error={formik.touched.price && Boolean(formik.errors.price)}
