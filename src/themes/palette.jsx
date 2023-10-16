@@ -2,7 +2,7 @@
 import { createTheme } from '@mui/material/styles';
 
 // assets
-import defaultColor from '@/assets/scss/_themes-vars.module.scss';
+import defaultColor from 'assets/scss/_themes-vars.module.scss';
 
 // ==============================|| DEFAULT THEME - PALETTE  ||============================== //
 
@@ -16,22 +16,33 @@ const Palette = (navType) => {
         black: colors.darkPaper,
       },
       primary: {
-        light: navType === 'dark' ? colors.darkPrimaryLight : colors.primaryLight,
-        main: navType === 'dark' ? colors.darkPrimaryMain : colors.primaryMain,
-        dark: navType === 'dark' ? colors.darkPrimaryDark : colors.primaryDark,
-        200: navType === 'dark' ? colors.darkPrimary200 : colors.primary200,
-        800: navType === 'dark' ? colors.darkPrimary800 : colors.primary800,
+        main: colors.primaryMain,
+        10: colors.primary10,
+        20: colors.primary20,
+        30: colors.primary30,
+        40: colors.primary40,
+        50: colors.primary50,
+        60: colors.primary60,
+        70: colors.primary70,
+        80: colors.primary80,
+        90: colors.primary90,
+        100: colors.primary100,
       },
       secondary: {
-        light: navType === 'dark' ? colors.darkSecondaryLight : colors.secondaryLight,
-        main: navType === 'dark' ? colors.darkSecondaryMain : colors.secondaryMain,
-        dark: navType === 'dark' ? colors.darkSecondaryDark : colors.secondaryDark,
-        200: navType === 'dark' ? colors.darkSecondary200 : colors.secondary200,
-        800: navType === 'dark' ? colors.darkSecondary800 : colors.secondary800,
+        main: colors.secondaryMain,
+        10: colors.secondary10,
+        20: colors.secondary20,
+        30: colors.secondary30,
+        40: colors.secondary40,
+        50: colors.secondary50,
+        60: colors.secondary60,
+        70: colors.secondary70,
+        80: colors.secondary80,
+        90: colors.secondary90,
+        100: colors.secondary100,
       },
       error: {
         light: colors.errorLight,
-        200: colors.error200,
         main: colors.errorMain,
         dark: colors.errorDark,
       },
@@ -40,21 +51,8 @@ const Palette = (navType) => {
         main: colors.orangeMain,
         dark: colors.orangeDark,
       },
-      blue: {
-        light: colors.blueLight,
-        main: colors.blueMain,
-      },
-      purple: {
-        light: colors.purpleLight,
-        main: colors.purpleMain,
-      },
-      green: {
-        light: colors.greenLight,
-        main: colors.greenMain,
-      },
       warning: {
         light: colors.warningLight,
-        200: colors.warning200,
         main: colors.warningMain,
         dark: colors.warningDark,
       },
@@ -67,10 +65,10 @@ const Palette = (navType) => {
       grey: {
         50: colors.grey50,
         100: colors.grey100,
-        500: navType === 'dark' ? colors.darkTextSecondary : colors.grey500,
-        600: navType === 'dark' ? colors.darkTextTitle : colors.grey900,
-        700: navType === 'dark' ? colors.darkTextPrimary : colors.grey700,
-        900: navType === 'dark' ? colors.darkTextPrimary : colors.grey900,
+        500: colors.grey500,
+        600: colors.grey900,
+        700: colors.grey700,
+        900: colors.grey900,
       },
       dark: {
         light: colors.darkTextPrimary,
@@ -80,16 +78,15 @@ const Palette = (navType) => {
         900: colors.darkPaper,
       },
       text: {
-        primary: navType === 'dark' ? colors.darkTextPrimary : colors.grey700,
-        secondary: navType === 'dark' ? colors.darkTextSecondary : colors.grey500,
-        dark: navType === 'dark' ? colors.darkTextPrimary : colors.grey900,
+        primary: colors.primary80,
+        secondary: colors.secondary60,
+        dark: colors.primary100,
         hint: colors.grey100,
-        light: colors.paper,
       },
-      divider: navType === 'dark' ? colors.darkTextPrimary : colors.primary200,
+      divider: colors.grey200,
       background: {
-        paper: navType === 'dark' ? colors.darkLevel2 : colors.paper,
-        default: navType === 'dark' ? colors.darkPaper : colors.paper,
+        paper: colors.paper,
+        default: colors.background,
       },
     },
   });

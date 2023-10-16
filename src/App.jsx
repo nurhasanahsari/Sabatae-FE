@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 // routing
 import Routes from '@/routes';
 
