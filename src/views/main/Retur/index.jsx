@@ -335,7 +335,7 @@ const Retur = () => {
         maxWidth="md"
         open={openDetailDialog}
         onClose={() => {
-          setSelectedInventory('');
+          setSelectedRetur('');
           setOpenDetailDialog(false);
         }}
         fullWidth
@@ -343,7 +343,7 @@ const Retur = () => {
         <DialogTitle>Detail Retur</DialogTitle>
         {openDetailDialog && (
           <DialogContent>
-            <DetailRetur data={selectedInventory} />
+            <DetailRetur data={selectedRetur} />
           </DialogContent>
         )}
         <DialogActions>
