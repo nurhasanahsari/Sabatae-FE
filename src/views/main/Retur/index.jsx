@@ -248,7 +248,7 @@ const Retur = () => {
                                 </Stack>
                               </TableCell>
                               <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-                                {moment(row?.updated).format('DD MMMM YYYY - HH:MM')}
+                                {moment(row?.updated).format('DD MMMM YYYY - HH:mm')}
                               </TableCell>
                               <TableCell align="center">
                                 <IconButton

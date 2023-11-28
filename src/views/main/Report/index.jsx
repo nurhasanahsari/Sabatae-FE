@@ -193,8 +193,8 @@ const Report = () => {
                   qty: i.qty,
                   price: i.price,
                   reason: i.reason || '-',
-                  created: moment(i.created).format('DD MMMM YYYY - HH:MM'),
-                  updated: moment(i.updated).format('DD MMMM YYYY - HH:MM'),
+                  created: moment(i.created).format('DD MMMM YYYY - HH:mm'),
+                  updated: moment(i.updated).format('DD MMMM YYYY - HH:mm'),
                 }))}
                 customHeader={[
                   'ID Transaksi',
@@ -250,7 +250,7 @@ const Report = () => {
                             </Stack>
                           </TableCell>
                           <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-                            {moment(row?.type === 'retur' ? row?.updated : row?.created).format('DD MMMM YYYY - HH:MM')}
+                            {moment(row?.type === 'retur' ? row?.updated : row?.created).format('DD MMMM YYYY - HH:mm')}
                           </TableCell>
                         </TableRow>
                       );

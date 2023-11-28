@@ -243,7 +243,7 @@ const Purchase = () => {
                                 Rp {parseInt(row?.price)?.toLocaleString('id')}
                               </TableCell>
                               <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-                                {moment(row?.created).format('DD MMMM YYYY - HH:MM')}
+                                {moment(row?.created).format('DD MMMM YYYY - HH:mm')}
                               </TableCell>
                             </TableRow>
                           );

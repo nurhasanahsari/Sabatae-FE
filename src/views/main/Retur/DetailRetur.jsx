@@ -99,7 +99,7 @@ const DetailRetur = ({ data }) => (
           <Typography>:</Typography>
         </Grid>
         <Grid item xs={7}>
-          <Typography>{moment(data?.updated).format('DD MMMM YYYY - HH:MM')}</Typography>
+          <Typography>{moment(data?.updated).format('DD MMMM YYYY - HH:mm')}</Typography>
         </Grid>
       </Grid>
     </Grid>
