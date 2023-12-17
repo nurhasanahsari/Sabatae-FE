@@ -244,7 +244,7 @@ const Retur = () => {
                               <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
                                 <Stack direction="column">
                                   {row?.name}
-                                  <Typography variant="caption">{row?.id_product}</Typography>
+                                  {/* <Typography variant="caption">{row?.id_product}</Typography> */}
                                 </Stack>
                               </TableCell>
                               <TableCell align="center" sx={{ textTransform: 'capitalize' }}>

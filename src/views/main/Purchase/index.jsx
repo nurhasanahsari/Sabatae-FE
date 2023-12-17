@@ -50,13 +50,13 @@ const headCells = [
     label: 'No.',
     align: 'center',
   },
-  // {
-  //   id: 'id',
-  //   numeric: false,
-  //   label: 'Kode Transaksi',
-  //   align: 'center',
-  //   sortable: false,
-  // },
+  {
+    id: 'id',
+    numeric: false,
+    label: 'Kode Transaksi',
+    align: 'center',
+    sortable: false,
+  },
   {
     id: 'name',
     numeric: false,
@@ -227,9 +227,9 @@ const Purchase = () => {
                               <TableCell align="center" component="th" scope="row">
                                 <>{page * rowsPerPage + index + 1}.</>
                               </TableCell>
-                              {/* <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
+                              <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
                                 {row?.id}
-                              </TableCell> */}
+                              </TableCell>
                               <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
                                 <Stack direction="column">
                                   {row?.name}
