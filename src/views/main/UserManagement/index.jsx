@@ -237,7 +237,6 @@ const UserManagement = () => {
                               <TableCell>
                                 <Stack alignItems="center" gap={1}>
                                   <Typography variant="h6">{row?.full_name}</Typography>
-                                  <Typography variant="caption">{row.id}</Typography>
                                 </Stack>
                               </TableCell>
                               <TableCell align="center">{row?.email}</TableCell>
