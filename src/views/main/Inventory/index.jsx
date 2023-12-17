@@ -250,7 +250,7 @@ const Inventory = () => {
                                   <Typography variant="h5" sx={{ textTransform: 'capitalize' }}>
                                     {row?.name}
                                   </Typography>
-                                  <Typography variant="caption">{row.id}</Typography>
+                                  {/* <Typography variant="caption">{row.id}</Typography> */}
                                 </Stack>
                               </TableCell>
                               <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
