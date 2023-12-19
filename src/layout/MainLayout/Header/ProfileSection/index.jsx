@@ -124,12 +124,12 @@ const ProfileSection = () => {
               </Typography>
               {user?.role === '01' && (
                 <Typography variant="subtitle2" sx={{ textAlign: 'left' }} color="text.light">
-                  Super Admin
+                  Pemilik
                 </Typography>
               )}
               {user?.role === '02' && (
                 <Typography variant="subtitle2" sx={{ textAlign: 'left' }} color="text.light">
-                  Admin
+                  Bagian Administrasi
                 </Typography>
               )}
             </Stack>
